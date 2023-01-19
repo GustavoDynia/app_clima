@@ -1,7 +1,6 @@
 import requests
 from pprint import pprint
 from time import sleep
-from tkinter import *
 
 control =''
 datalist = dict()  #dicionário com informações aproveitadas da API, que de fato aparecem no meu programa.
@@ -58,9 +57,4 @@ while True:
 
         sleep(2)
         print('-'*100)
-        #print(dados_do_tempo)
-        '''janela = Tk()
-        janela.title('Clima Tempo')
-        texto_orientacao = Label(janela, text='Texto de teste')
-        texto_orientacao.grid(column=0, row=0)
-        janela.mainloop()'''
+       
