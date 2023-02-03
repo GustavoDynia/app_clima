@@ -12,6 +12,10 @@ while True:
         sleep(1)
         print('Programa encerrado. Volte sempre!')
         break
+    elif control != 'X' and control != 'S':
+        print('Opção inválida! Tente novamente com [S] ou [X]')
+        continue
+
     cidade = input('Digite o nome da cidade ou [X] para encerrar o programa: ').capitalize().strip()
 
     if cidade == 'X':
@@ -25,22 +29,26 @@ while True:
         base_URL = 'http://api.weatherapi.com/v1/current.json?key='+API_Chave+'&q='+cidade+'&aqi=no'   #URL BASE + KEY_API + "&q=" + CIDADE + "&aqi=no"
         dados_do_tempo = requests.get(base_URL).json()  #VAR RECEBENDO COMANDO DE REQUISIÇÃO DE DADOS DA API DO URL EM FORMATO JSON
         #AQUI TERMINA O CÓDIGO DA CONEXÃO COM API
+    
+    dado_tratado = dados_do_tempo.copy()
 
-
-        dado_tratado = dados_do_tempo.copy()
-
-        def tratar_data():
-            '''
-            Converte o formato de data YYYY/MM/DD para DD/MM/YYYY
-            :return: dia+mes+ano
-            '''
-            dia = dado_tratado['location']['localtime'][8:10]
-            mes = dado_tratado['location']['localtime'][4:8]
-            ano = dado_tratado['location']['localtime'][:4]
-            datatratada = dia+mes+ano
-            return datatratada
+    def tratar_data():
+        '''
+        Converte o formato de data YYYY/MM/DD para DD/MM/YYYY
+        :return: dia+mes+ano
+        '''
+        dia = dado_tratado['location']['localtime'][8:10]
+        mes = dado_tratado['location']['localtime'][3:8]
+        ano = dado_tratado['location']['localtime'][:4]
+        datatratada = dia+mes+ano
+        return datatratada
+       
+    try:
         datatratada = tratar_data()
-
+    except KeyError:
+        print('O local inserido não está em nosso sistema ou foi digitado incorretamente.')
+        continue
+    else:
         print('-' * 100)
         print(f'''Local: {dado_tratado['location']['name'].capitalize()}, {dado_tratado['location']['region']}, {dado_tratado['location']['country']}\nData: {datatratada}\nHora local: {dado_tratado['location']['localtime'][11:]}''')
         print('-'*100)
