@@ -1,6 +1,7 @@
 import requests
 from pprint import pprint
 from time import sleep
+from decouple import config
 
 control =''
 datalist = dict()  #dicionário com informações aproveitadas da API, que de fato aparecem no meu programa.
@@ -25,9 +26,11 @@ while True:
         break
 
     else:
-        API_Chave = 'c8fb29305cba491d93701657221712'
-        base_URL = 'http://api.weatherapi.com/v1/current.json?key='+API_Chave+'&q='+cidade+'&aqi=no'   #URL BASE + KEY_API + "&q=" + CIDADE + "&aqi=no"
-        dados_do_tempo = requests.get(base_URL).json()  #VAR RECEBENDO COMANDO DE REQUISIÇÃO DE DADOS DA API DO URL EM FORMATO JSON
+        API_Chave = config('API_Chave')
+        base_URL = 'http://api.weatherapi.com/v1/current.json?key='+API_Chave+'&q='+cidade+'&aqi=no'
+        #URL BASE + KEY_API + "&q=" + CIDADE + "&aqi=no"
+        dados_do_tempo = requests.get(base_URL).json()
+        #VAR RECEBENDO COMANDO DE REQUISIÇÃO DE DADOS DA API DO URL EM FORMATO JSON
         #AQUI TERMINA O CÓDIGO DA CONEXÃO COM API
     
     dado_tratado = dados_do_tempo.copy()
